@@ -39,28 +39,15 @@ function Home() {
     setIsCartModalOpen(false);
   };
 
-  function increaseOrderCount(id) {
-    setProducts((prevProducts) => {
-      return prevProducts.map((product) => {
-        if (product.id === id) {
-          return { ...product, quantity: (product.quantity || 0) + 1 };
-        }
-        return product;
-      });
-    });
+  function increaseOrderCount() {
+    setOrderCount(orderCount + 1);
   }
 
-  function decreaseOrderCount(id) {
-    setProducts((prevProducts) => {
-      return prevProducts.map((product) => {
-        if (product.id === id && product.quantity > 0) {
-          return { ...product, quantity: product.quantity - 1 };
-        }
-        return product;
-      });
-    });
+  function decreaseOrderCount() {
+    if (orderCount > 0) {
+      setOrderCount(orderCount - 1);
+    }
   }
-  
   return (
     <div className='contant'>
       <img src={Headling} className='img-head'/>
