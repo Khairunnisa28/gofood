@@ -30,6 +30,7 @@ function Home() {
   const [products, setProducts] = useState(initialProducts);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [orderCount, setOrderCount] = useState(0);
+  const [cart, setCart] = useState([])
 
   function openCartModal(){
     setIsCartModalOpen(true);
@@ -39,15 +40,32 @@ function Home() {
     setIsCartModalOpen(false);
   };
 
-  function increaseOrderCount() {
-    setOrderCount(orderCount + 1);
+  function increaseOrderCount(id) {
+    setProducts((prevProducts) => {
+      return prevProducts.map((product) => {
+        if (product.id === id) {
+          return { ...product, quantity: (product.quantity || 0) + 1 };
+        }
+        return product;
+      });
+    });
   }
 
-  function decreaseOrderCount() {
-    if (orderCount > 0) {
-      setOrderCount(orderCount - 1);
-    }
+  function decreaseOrderCount(id) {
+    setProducts((prevProducts) => {
+      return prevProducts.map((product) => {
+        if (product.id === id && product.quantity > 0) {
+          return { ...product, quantity: product.quantity - 1 };
+        }
+        return product;
+      });
+    });
   }
+
+  function addToCart(products){
+    setCart((prevCart) => [...prevCart, product]);
+  }
+  
   return (
     <div className='contant'>
       <img src={Headling} className='img-head'/>
